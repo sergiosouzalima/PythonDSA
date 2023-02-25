@@ -8,8 +8,6 @@ from os import system, name
 # Board (tabuleiro)
 board = ['''
 
->>>>>>>>>>Hangman<<<<<<<<<<
-
    +---+
    |   |
        |
@@ -34,36 +32,36 @@ board = ['''
        |
    =========''', '''
 
-    +---+
-    |   |
-    O   |
-   /|   |
-        |
-        |
+   +---+
+   |   |
+   O   |
+  /|   |
+       |
+       |
    =========''', '''
 
-    +---+
-    |   |
-    O   |
-   /|\  |
-        |
-        |
+   +---+
+   |   |
+   O   |
+  /|\  |
+       |
+       |
    =========''', '''
 
-    +---+
-    |   |
-    O   |
-   /|\  |
-   /    |
-        |
+   +---+
+   |   |
+   O   |
+  /|\  |
+  /    |
+       |
    =========''', '''
 
-    +---+
-    |   |
-    O   |
-   /|\  |
-   / \  |
-        |
+   +---+
+   |   |
+   O   |
+  /|\  |
+  / \  |
+       |
    =========''']
 
 
@@ -87,7 +85,7 @@ class Hangman:
      # Método Construtor
      def __init__(self):
           # Lista de palavras para o jogo
-          self.palavras = ['banana'] ##, 'abacate', 'uva', 'morango', 'laranja']
+          self.palavras = ['banana', 'abacate', 'laranja', 'tomate']
           # Escolhe randomicamente uma palavra
           self.palavra = random.choice(self.palavras)
           # Lista  de letras  da palavra
@@ -133,21 +131,22 @@ class Hangman:
           print(board[self.TOTAL_CHANCES - self.chances])
           print("\n")
 
+def show_screen(hangman):
+     limpa_tela()
+     print(">>>>>>>>>>Hangman<<<<<<<<<<")
+     hangman.show_board()
+     print("\nBem vindo ao jogo da forca!")
+     print("Adivinhe a palavra abaixo:\n")
+
+
 def game():
-    #limpa_tela()
-    #print("\nBem vindo ao jogo da forca!")
-    #print("Adivinhe a palavra abaixo:\n")
 
     hangman = Hangman()
 
-    hangman.show_board()
-
-    limpa_tela()
-    print("\nBem vindo ao jogo da forca!")
-    print("Adivinhe a palavra abaixo:\n")
-    hangman.show_board()
-
     while not hangman.is_game_over():
+
+          show_screen(hangman)
+
           print("Palavra: ", hangman.tabuleiro)
           print("\n")
 
@@ -155,10 +154,7 @@ def game():
           tentativa = input("\nDigite uma letra: ")
 
           if hangman.was_already_tried(tentativa):
-               input("Você já tentou essa letra. Escolha outra!")
-               limpa_tela()
-               hangman.show_board()
-               #print("\n")
+               input("Você já tentou essa letra. Escolha outra! <ENTER>")
                continue
 
           hangman.add_tried_letters(tentativa)
@@ -167,8 +163,10 @@ def game():
                print("Você acertou a letra!")
                print("\n")
 
-          limpa_tela()
-          hangman.show_board()
+
+    show_screen(hangman)
+    print("Palavra: ", hangman.tabuleiro)
+    print("\n")
 
     if hangman.player_wins():
          print("\nVocê venceu! A palavra era: {}".format(hangman.palavra))
