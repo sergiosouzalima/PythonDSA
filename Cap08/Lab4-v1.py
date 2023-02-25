@@ -10,61 +10,61 @@ board = ['''
 
 >>>>>>>>>>Hangman<<<<<<<<<<
 
-+---+
-|   |
-    |
-    |
-    |
-    |
-=========''', '''
+   +---+
+   |   |
+       |
+       |
+       |
+       |
+   =========''', '''
 
-+---+
-|   |
-O   |
-    |
-    |
-    |
-=========''', '''
+   +---+
+   |   |
+   O   |
+       |
+       |
+       |
+   =========''', '''
 
-+---+
-|   |
-O   |
-|   |
-    |
-    |
-=========''', '''
+   +---+
+   |   |
+   O   |
+   |   |
+       |
+       |
+   =========''', '''
 
- +---+
- |   |
- O   |
-/|   |
-     |
-     |
-=========''', '''
+    +---+
+    |   |
+    O   |
+   /|   |
+        |
+        |
+   =========''', '''
 
- +---+
- |   |
- O   |
-/|\  |
-     |
-     |
-=========''', '''
+    +---+
+    |   |
+    O   |
+   /|\  |
+        |
+        |
+   =========''', '''
 
- +---+
- |   |
- O   |
-/|\  |
-/    |
-     |
-=========''', '''
+    +---+
+    |   |
+    O   |
+   /|\  |
+   /    |
+        |
+   =========''', '''
 
- +---+
- |   |
- O   |
-/|\  |
-/ \  |
-     |
-=========''']
+    +---+
+    |   |
+    O   |
+   /|\  |
+   / \  |
+        |
+   =========''']
 
 
 
@@ -134,12 +134,17 @@ class Hangman:
           print("\n")
 
 def game():
-    limpa_tela()
-    print("\nBem vindo ao jogo da forca!")
-    print("Adivinhe a palavra abaixo:\n")
+    #limpa_tela()
+    #print("\nBem vindo ao jogo da forca!")
+    #print("Adivinhe a palavra abaixo:\n")
 
     hangman = Hangman()
 
+    hangman.show_board()
+
+    limpa_tela()
+    print("\nBem vindo ao jogo da forca!")
+    print("Adivinhe a palavra abaixo:\n")
     hangman.show_board()
 
     while not hangman.is_game_over():
@@ -150,13 +155,20 @@ def game():
           tentativa = input("\nDigite uma letra: ")
 
           if hangman.was_already_tried(tentativa):
-               print("Você já tentou essa letra. Escolha outra!")
+               input("Você já tentou essa letra. Escolha outra!")
+               limpa_tela()
+               hangman.show_board()
+               #print("\n")
                continue
 
           hangman.add_tried_letters(tentativa)
 
           if hangman.is_letter_in_drown_word(tentativa):
                print("Você acertou a letra!")
+               print("\n")
+
+          limpa_tela()
+          hangman.show_board()
 
     if hangman.player_wins():
          print("\nVocê venceu! A palavra era: {}".format(hangman.palavra))
